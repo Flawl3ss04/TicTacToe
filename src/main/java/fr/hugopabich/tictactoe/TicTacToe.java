@@ -19,6 +19,7 @@ public class TicTacToe extends Thread {
 
     public TicTacToe(){
         createWindow();
+        Images.init();
     }
 
     /**
