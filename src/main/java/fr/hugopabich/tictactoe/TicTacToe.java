@@ -4,49 +4,44 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
 /**
  * Classe principale du jeu
  */
-public class TicTacToe extends Thread {
+public class TicTacToe {
 
-    private static final int WIDTH = 600, HEIGHT = 600;
 
-    private Model model;
-
-    private JFrame frame;
-    private BufferedImage screen;
+    @Getter
+    private final Controller controller;
+    @Getter
+    private final View view;
+    @Getter
+    private final Model model;
 
     @Getter @Setter
     private boolean running;
 
+
+
     public TicTacToe(){
-        this.model = new Model();
-
-        createWindow();
         Images.init();
+
+        this.model = new Model(this);
+        this.view = new View(this);
+        this.controller = new Controller(this);
+
     }
 
-    /**
-     * Créé la fenêtre du jeu.
-     */
-    public void createWindow(){
-        frame = new JFrame("TicTacToe - Hugo Pabich");
-        frame.setSize(WIDTH, HEIGHT);
-
-        //centrer la fenêtre
-        frame.setLocationRelativeTo(null);
-
-        //rendre visible la fenêtre
-        frame.setVisible(true);
-    }
-
-    @Override
-    public void run() {
+    public void start(){
         running = true;
-        while(running){
-
-        }
+        this.view.createWindow();
     }
+
+    public void stop(){
+        running = false;
+    }
+
 }

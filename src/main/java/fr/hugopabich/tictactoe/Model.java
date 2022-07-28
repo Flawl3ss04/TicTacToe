@@ -17,14 +17,16 @@ public class Model {
                                                  0, 4, 8, // X00 0X0 00X
                                                  2, 4, 6}; // 00X 0X0 X00
 
+    private final TicTacToe tictactoe;
     @Getter
     private byte[] board; // 012 345 678 from left to right top to bottom
 
-    public Model(){
-        this(new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 });
+    public Model(TicTacToe tictactoe){
+        this(tictactoe, new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 });
     }
 
-    public Model(byte[] board){
+    public Model(TicTacToe tictactoe, byte[] board){
+        this.tictactoe = tictactoe;
         this.board = board;
     }
 
@@ -46,6 +48,7 @@ public class Model {
     public boolean placeMark(int position, byte mark){
         if(canPlaceMark(position)){
             this.board[position] = mark;
+            if(tictactoe != null) tictactoe.getView().update();
             return true;
         }
         return false;
