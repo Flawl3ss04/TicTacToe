@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage;
 /**
  * Classe principale du jeu
  */
-public class TicTacToe {
+public class TicTacToe implements Runnable {
 
 
     @Getter
@@ -33,15 +33,21 @@ public class TicTacToe {
         this.view = new View(this);
         this.controller = new Controller(this);
 
-    }
-
-    public void start(){
-        running = true;
         this.view.createWindow();
+        new Thread(this, "TicTacToe").start();
     }
 
-    public void stop(){
-        running = false;
+    public void run() {
+        running = true;
+        while(running){
+            view.clear();
+            view.draw();
+            try {
+                Thread.sleep(17);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
     }
 
 }

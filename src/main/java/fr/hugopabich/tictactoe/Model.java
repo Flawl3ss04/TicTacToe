@@ -48,7 +48,6 @@ public class Model {
     public boolean placeMark(int position, byte mark){
         if(canPlaceMark(position)){
             this.board[position] = mark;
-            if(tictactoe != null) tictactoe.getView().update();
             return true;
         }
         return false;
