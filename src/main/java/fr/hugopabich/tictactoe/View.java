@@ -4,12 +4,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
 import java.util.Random;
 
 public class View {
 
     private static final Color BACKGROUND_COLOR = Color.WHITE;
-    private static final int WIDTH = 600, HEIGHT = 600;
+    public static final int WIDTH = 600, HEIGHT = 600;
     private final TicTacToe tictactoe;
 
     private JFrame frame;
@@ -32,6 +33,7 @@ public class View {
         frame = new JFrame("TicTacToe - Hugo Pabich");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
+
         frame.setSize(WIDTH, HEIGHT);
 
         //centrer la fenêtre
@@ -44,6 +46,7 @@ public class View {
         canvas.addMouseListener(tictactoe.getController());
 
         frame.add(canvas);
+        frame.pack();
 
         //rendre visible la fenêtre
         frame.setVisible(true);
@@ -58,8 +61,16 @@ public class View {
     public void draw(){
         Graphics g = screen.getGraphics();
 
-        g.setColor(Color.RED);
-        g.fillRect(random.nextInt(450), random.nextInt(450), 50, 50);
+        g.drawImage(Images.getImage("tictactoe_board"), 0, 0, WIDTH, HEIGHT, null);
+
+        byte[] board = tictactoe.getModel().getBoard();
+        for(int i = 0; i < board.length; i++){
+            if(board[i] != 0){
+                BufferedImage image = Images.getImage("tictactoe_" + (board[i] == Model.USER_MARK ? "x" : "o"));
+                int s = 168;
+                g.drawImage(image, i%3 * (s+30) + 18, i/3 * (s+30) + 18, s, s, null);
+            }
+        }
 
         graphics.drawImage(screen, 0, 0, screen.getWidth(), screen.getHeight(), null);
         bufferStrategy.show();
