@@ -31,6 +31,7 @@ public class View {
         frame = new JFrame("TicTacToe - Hugo Pabich");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
+        frame.setIconImage(Images.getImage("icon"));
 
         frame.setSize(WIDTH, HEIGHT);
 
