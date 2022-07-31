@@ -32,7 +32,7 @@ public class Model {
 
 
     public Model(TicTacToe tictactoe){
-        this(tictactoe, new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 });
+        this(tictactoe, new byte[9]);
     }
 
     public Model(TicTacToe tictactoe, byte[] board){
@@ -58,8 +58,6 @@ public class Model {
     public boolean placeMark(int position, byte mark){
         if(canPlaceMark(position)){
             this.board[position] = mark;
-
-            checkEnd(board);
 
             if(!checkEnd(board)){
                 computerPlay();
@@ -148,9 +146,9 @@ public class Model {
      * Checks for every possible win scenarios.
      * @return The winner mark or 0.
      */
-    public int checkWin(byte[] board) {
+    public byte checkWin(byte[] board) {
         for(int i = 0; i < WIN_SITUATIONS.length; i+= 3){
-            if(board[WIN_SITUATIONS[i]] == board[WIN_SITUATIONS[i+1]] && board[WIN_SITUATIONS[i+1]] == board[WIN_SITUATIONS[i+2]]){
+            if(board[WIN_SITUATIONS[i]] == board[WIN_SITUATIONS[i+1]] && board[WIN_SITUATIONS[i+1]] == board[WIN_SITUATIONS[i+2]] && board[WIN_SITUATIONS[i]] != 0){
                 return board[WIN_SITUATIONS[i]];
             }
         }
