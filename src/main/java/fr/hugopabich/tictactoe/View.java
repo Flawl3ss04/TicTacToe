@@ -23,7 +23,7 @@ public class View {
     }
 
     /**
-     * Crée la fenêtre du jeu.
+     * Create the game window
      */
     public void createWindow(){
         screen = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
@@ -57,7 +57,7 @@ public class View {
 
 
     /**
-     * Dessine sur l'écran
+     * Draws on screen
      */
     public void draw(){
         Graphics g = screen.getGraphics();
@@ -89,7 +89,7 @@ public class View {
     }
 
     /**
-     * Nettoie la fenêtre
+     * Clears the screen
      */
     public void clear() {
         Graphics g = screen.getGraphics();

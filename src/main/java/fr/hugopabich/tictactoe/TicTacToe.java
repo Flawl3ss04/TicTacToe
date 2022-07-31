@@ -9,7 +9,7 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
 /**
- * Classe principale du jeu
+ * Main game class
  */
 public class TicTacToe implements Runnable {
 
