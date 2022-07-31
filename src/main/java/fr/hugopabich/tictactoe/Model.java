@@ -2,8 +2,14 @@ package fr.hugopabich.tictactoe;
 
 import lombok.Getter;
 
+import java.util.Arrays;
+import java.util.HashMap;
+
 public class Model {
 
+
+    //The score for the mark, 0 for tie, 1 for computer, -1 for user.
+    private static final int[] MINIMAX_SCORES = new int[]{0,1,-1};
     public static final byte COMPUTER_MARK = 1;
     public static final byte USER_MARK = 2;
 
@@ -20,6 +26,10 @@ public class Model {
     private final TicTacToe tictactoe;
     @Getter
     private byte[] board; // 012 345 678 from left to right top to bottom
+
+    @Getter
+    private boolean ended;
+
 
     public Model(TicTacToe tictactoe){
         this(tictactoe, new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 });
@@ -48,31 +58,112 @@ public class Model {
     public boolean placeMark(int position, byte mark){
         if(canPlaceMark(position)){
             this.board[position] = mark;
+
+            checkEnd(board);
+
+            if(!checkEnd(board)){
+                computerPlay();
+                if(checkEnd(board)){
+                    ended = true;
+                }
+            } else {
+                ended = true;
+            }
+
             return true;
         }
         return false;
     }
 
     /**
+     * Plays the next move for the computer using the minimax algorithm.
+     */
+    public void computerPlay(){
+        int maxScore = Integer.MIN_VALUE;
+        int bestMove = -1;
+        byte[] clone = new byte[board.length];
+        System.arraycopy(board, 0, clone, 0, board.length);
+        for(int i = 0; i < board.length; i++){
+            if(canPlaceMark(i)){
+                clone[i] = COMPUTER_MARK;
+                int score = minimax(clone, false);
+                if(score > maxScore){
+                    maxScore = score;
+                    bestMove = i;
+                }
+                clone[i] = 0;
+            }
+        }
+
+        this.board[bestMove] = COMPUTER_MARK;
+    }
+
+    /**
+     * Give the score of the current state of the board.
+     * It implements the minimax algorithm.
+     * @param board the board to check its score.
+     * @param maximizingPlayer if the algorithm should check to maximize the result.
+     * @return the score of the state of this board.
+     */
+    private int minimax(byte[] board, boolean maximizingPlayer){
+        if(checkEnd(board)){
+            return MINIMAX_SCORES[checkWin(board)];
+        }
+
+        if(maximizingPlayer){
+            int maxScore = Integer.MIN_VALUE;
+            for(int i = 0; i < board.length; i++){
+                if(board[i] == 0){
+                    board[i] = COMPUTER_MARK;
+                    int score = minimax(board, false);
+                    maxScore = Math.max(score, maxScore);
+                    board[i] = 0;
+                }
+            }
+            return maxScore;
+        } else {
+            int minScore = Integer.MAX_VALUE;
+            for(int i = 0; i < board.length; i++){
+                if(board[i] == 0){
+                    board[i] = USER_MARK;
+                    int score = minimax(board, true);
+                    minScore = Math.min(score, minScore);
+                    board[i] = 0;
+                }
+            }
+            return minScore;
+        }
+    }
+
+    /**
      * Checks if the board is full and the game ends on a tie.
      * @return true if and only if the board is not full.
      */
-    public boolean checkTie() {
+    public boolean checkTie(byte[] board) {
         for(byte b : board) if(b == 0) return false;
         return true;
     }
 
     /**
-     * Checks for every possible win scenarios
-     * @return true if and only if the game should end because of a win
+     * Checks for every possible win scenarios.
+     * @return The winner mark or 0.
      */
-    public boolean checkWin() {
+    public int checkWin(byte[] board) {
         for(int i = 0; i < WIN_SITUATIONS.length; i+= 3){
             if(board[WIN_SITUATIONS[i]] == board[WIN_SITUATIONS[i+1]] && board[WIN_SITUATIONS[i+1]] == board[WIN_SITUATIONS[i+2]]){
-                return true;
+                return board[WIN_SITUATIONS[i]];
             }
         }
-        return false;
+        return 0;
+    }
+
+    /**
+     * Checks if the board is in a win or tie state.
+     * @param board the board to check.
+     * @return true if the board is in a win or tie state.
+     */
+    private boolean checkEnd(byte[] board){
+        return checkWin(board) != 0 || checkTie(board);
     }
 
 }

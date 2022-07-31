@@ -8,25 +8,25 @@ public class ModelTests {
     @Test
     public void checkNotTie(){
         Model model = new Model(null, new byte[]{0,0,0,1,0,2,0,0,0});
-        assertFalse(model.checkTie());
+        assertFalse(model.checkTie(model.getBoard()));
     }
 
     @Test
     public void checkTie(){
         Model model = new Model(null, new byte[]{1,1,2,2,1,1,1,2,2});
-        assertTrue(model.checkTie());
+        assertTrue(model.checkTie(model.getBoard()));
     }
 
     @Test
     public void checkNotWin(){
         Model model = new Model(null, new byte[]{1,1,2,2,1,1,1,2,2});
-        assertFalse(model.checkWin());
+        assertFalse(model.checkWin(model.getBoard()) != 0);
     }
 
     @Test
     public void checkWin(){
         Model model = new Model(null, new byte[]{2,1,2,2,1,0,0,1,1});
-        assertTrue(model.checkWin());
+        assertTrue(model.checkWin(model.getBoard()) != 0);
     }
 
     @Test

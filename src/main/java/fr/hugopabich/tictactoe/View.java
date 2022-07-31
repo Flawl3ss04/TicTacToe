@@ -4,8 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
-import java.util.Arrays;
-import java.util.Random;
 
 public class View {
 
@@ -57,7 +55,10 @@ public class View {
         graphics = bufferStrategy.getDrawGraphics();
     }
 
-    Random random = new Random();
+
+    /**
+     * Dessine sur l'écran
+     */
     public void draw(){
         Graphics g = screen.getGraphics();
 
@@ -67,7 +68,7 @@ public class View {
         for(int i = 0; i < board.length; i++){
             if(board[i] != 0){
                 BufferedImage image = Images.getImage("tictactoe_" + (board[i] == Model.USER_MARK ? "x" : "o"));
-                int s = 168;
+                int s = 168; //Nouvelle taille de l'image, adaptée au board.
                 g.drawImage(image, i%3 * (s+30) + 18, i/3 * (s+30) + 18, s, s, null);
             }
         }

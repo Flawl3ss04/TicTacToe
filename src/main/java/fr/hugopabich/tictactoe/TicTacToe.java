@@ -13,18 +13,15 @@ import java.awt.image.BufferedImage;
  */
 public class TicTacToe implements Runnable {
 
-
     @Getter
-    private final Controller controller;
+    private final Model model;
     @Getter
     private final View view;
     @Getter
-    private final Model model;
+    private final Controller controller;
 
     @Getter @Setter
     private boolean running;
-
-
 
     public TicTacToe(){
         Images.init();
