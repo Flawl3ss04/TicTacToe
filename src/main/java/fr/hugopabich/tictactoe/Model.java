@@ -164,4 +164,9 @@ public class Model {
         return checkWin(board) != 0 || checkTie(board);
     }
 
+    public void restart(){
+        ended = false;
+        board = new byte[board.length];
+    }
+
 }

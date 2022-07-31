@@ -25,8 +25,12 @@ public class Controller implements MouseListener {
         int slotX = e.getX()*3/View.WIDTH;
         int slotY = e.getY()*3/View.HEIGHT;
         int position = 3*slotY + slotX;
-        if(tictactoe.getModel().canPlaceMark(position)){
-            tictactoe.getModel().placeMark(position, Model.USER_MARK);
+        if(!tictactoe.getModel().isEnded()){
+            if(tictactoe.getModel().canPlaceMark(position)){
+                tictactoe.getModel().placeMark(position, Model.USER_MARK);
+            }
+        } else {
+            tictactoe.getModel().restart();
         }
     }
 

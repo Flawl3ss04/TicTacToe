@@ -73,6 +73,17 @@ public class View {
             }
         }
 
+        if(tictactoe.getModel().isEnded()){
+            byte winner = tictactoe.getModel().checkWin(tictactoe.getModel().getBoard());
+            if(winner != 0){
+                g.drawImage(Images.getImage("tictactoe_win"), 0, 0, WIDTH, HEIGHT, null);
+                BufferedImage image = Images.getImage("tictactoe_" + (winner == Model.USER_MARK ? "x" : "o"));
+                g.drawImage(image, (WIDTH-image.getWidth())/2, (HEIGHT-image.getHeight())/2, null);
+            } else {
+                g.drawImage(Images.getImage("tictactoe_tie"), 0, 0, WIDTH, HEIGHT, null);
+            }
+        }
+
         graphics.drawImage(screen, 0, 0, screen.getWidth(), screen.getHeight(), null);
         bufferStrategy.show();
     }
