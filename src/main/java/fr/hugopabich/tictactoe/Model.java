@@ -2,8 +2,9 @@ package fr.hugopabich.tictactoe;
 
 import lombok.Getter;
 
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class Model {
 
@@ -29,6 +30,8 @@ public class Model {
 
     @Getter
     private boolean ended;
+
+    private Random random = new Random();
 
 
     public Model(TicTacToe tictactoe){
@@ -77,6 +80,18 @@ public class Model {
      * Plays the next move for the computer using the minimax algorithm.
      */
     public void computerPlay(){
+        //Reduces the difficulty by choosing a random move 20% of the time.
+        if(random.nextFloat() < 0.2){
+            List<Integer> moves = new ArrayList<>(9);
+            for(int i = 0; i < board.length; i++) {
+                if (canPlaceMark(i)) {
+                    moves.add(i);
+                }
+            }
+            this.board[moves.get(random.nextInt(moves.size()))] = COMPUTER_MARK;
+            return;
+        }
+
         int maxScore = Integer.MIN_VALUE;
         int bestMove = -1;
         byte[] clone = new byte[board.length];
