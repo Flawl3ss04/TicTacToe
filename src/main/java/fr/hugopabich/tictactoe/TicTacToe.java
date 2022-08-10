@@ -3,11 +3,6 @@ package fr.hugopabich.tictactoe;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
-
 /**
  * Main game class
  */

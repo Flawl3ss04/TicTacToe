@@ -62,12 +62,7 @@ public class Model {
         if(canPlaceMark(position)){
             this.board[position] = mark;
 
-            if(!checkEnd(board)){
-                computerPlay();
-                if(checkEnd(board)){
-                    ended = true;
-                }
-            } else {
+            if(checkEnd(board)){
                 ended = true;
             }
 
@@ -109,6 +104,10 @@ public class Model {
         }
 
         this.board[bestMove] = COMPUTER_MARK;
+
+        if(checkEnd(board)){
+            ended = true;
+        }
     }
 
     /**

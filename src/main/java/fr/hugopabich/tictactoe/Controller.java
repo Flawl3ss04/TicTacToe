@@ -28,6 +28,9 @@ public class Controller implements MouseListener {
         if(!tictactoe.getModel().isEnded()){
             if(tictactoe.getModel().canPlaceMark(position)){
                 tictactoe.getModel().placeMark(position, Model.USER_MARK);
+                if(!tictactoe.getModel().isEnded()){
+                    tictactoe.getModel().computerPlay();
+                }
             }
         } else {
             tictactoe.getModel().restart();
